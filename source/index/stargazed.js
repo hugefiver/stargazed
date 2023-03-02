@@ -118,35 +118,31 @@ async function fetchUserStargazedRepos({
   page = 1,
 }) {
   let entries = list;
-  let pageNumber = page;
   let response;
 
-  const {username, token} = options;
-  const url = `users/${username}/starred?&per_page=100&page=${pageNumber}`;
+  while (true) {
+    const { username, token } = options;
+    const url = `users/${username}/starred?direction=desc&sort=created&per_page=100&page=${page}`;
 
-  try {
-    response = await ghGot(url, {token});
-  } catch (err) {
-    spinner.fail('Error occured while fetching data!');
-    flashError(err);
+    try {
+      response = await ghGot(url, { token });
+    } catch (err) {
+      spinner.fail('Error occured while fetching data!');
+      flashError(err);
 
-    return;
-  }
+      return;
+    }
 
-  const {body, headers} = response;
+    const { body, headers } = response;
 
-  // Concatenate to existing data
-  entries = entries.concat(body);
-
-  // GitHub returns `last` for the last page
-  if (headers.link && headers.link.includes('next')) {
-    pageNumber += 1;
-    return fetchUserStargazedRepos({
-      spinner,
-      options,
-      list: entries,
-      page: pageNumber,
-    });
+    // Concatenate to existing data
+    entries = entries.concat(body);
+    
+    if (headers.link && headers.link.includes('next')) {
+      page += 1;
+    } else {
+      break;
+    }
   }
 
   return {
