@@ -122,7 +122,7 @@ async function fetchUserStargazedRepos({
 
   while (true) {
     const { username, token } = options;
-    const url = `users/${username}/starred?direction=asc&sort=created&per_page=100&page=${page}`;
+    const url = `users/${username}/starred?direction=desc&sort=created&per_page=100&page=${page}`;
 
     try {
       response = await ghGot(url, { token });
