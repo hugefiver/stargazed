@@ -14,5 +14,6 @@ yarn-error.log*
 lerna-debug.log*
 
 .yarn/
+.yarnrc.yml
 /.pnp.cjs
 /.pnp.loader.mjs
