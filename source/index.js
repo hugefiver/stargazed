@@ -96,9 +96,8 @@ global.GLOBAL_AGENT.HTTPS_PROXY = process.env.HTTPS_PROXY || process.env.https_p
 		// Stargazed Repos
 		stargazed: sort ? ordered : unordered,
 		username,
-		date: `${new Date().getDate()}--${
-			new Date().getMonth() + 1
-		}--${new Date().getFullYear()}`,
+		date: `${new Date().getDate()}--${new Date().getMonth() + 1
+			}--${new Date().getFullYear()}`,
 	});
 
 	// Write Readme Content locally
